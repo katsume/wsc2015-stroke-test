@@ -1,4 +1,4 @@
-# gulp-skelton
+# test-stroke
 
 ## Install
 
