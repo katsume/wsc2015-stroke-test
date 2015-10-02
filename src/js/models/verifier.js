@@ -49,7 +49,7 @@ class Verifier {
 		});
 
 		if(typeof answer!=='number'){
-			// return;
+			return;
 		}
 
 		console.log(route, this._lut[answer].id, this._lut[answer].value);
