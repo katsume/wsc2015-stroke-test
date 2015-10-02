@@ -51,6 +51,8 @@ class Touch {
 		}
 		this._touching= false;
 		e.preventDefault();
+
+		this.trigger('end');
 	}
 }
 

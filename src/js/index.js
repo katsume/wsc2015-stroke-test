@@ -1,11 +1,13 @@
-var Stroke= require('./models/stroke');
+var Stroke= require('./models/stroke'),
+	Verifier= require('./models/verifier');
 
 var Renderer= require('./views/renderer'),
 	Touch= require('./views/touch');
 
 document.addEventListener('DOMContentLoaded', ()=>{
 
-	var stroke= new Stroke();
+	var stroke= new Stroke(),
+		verifier= new Verifier();
 
 	var stage= document.querySelector('.stage'),
 		renderer= new Renderer(stage),
@@ -19,6 +21,10 @@ document.addEventListener('DOMContentLoaded', ()=>{
 	touch.on('update', (point)=>{
 		stroke.append(point);
 		requestAnimationFrame(render);
+	});
+
+	touch.on('end', ()=>{
+		verifier.verify(stroke.route);
 	});
 
 	var render= ()=>{

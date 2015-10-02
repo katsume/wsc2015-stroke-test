@@ -15,10 +15,15 @@ module.exports= {
 			module: {
 				loaders: [
 					{
+						test: /sylvester/,
+						loader: 'exports?Vector,Matrix,Line,Plane,$V,$M,$L,$P'
+					},
+					{
 						test: /\.js?$/,
 						exclude: /(node_modules|bower_components)/,
 						loader: 'babel',
 						query: {
+							'blacklist': ['strict']
 						}
 					}
 				]

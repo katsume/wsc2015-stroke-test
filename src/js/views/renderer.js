@@ -33,9 +33,9 @@ module.exports= class {
 		ctx.clearRect(0, 0, this._elm.width, this._elm.height);
 		ctx.beginPath();
 
-		ctx.moveTo(points[0].x, points[0].y);
+		ctx.moveTo(points[0].e(1), points[0].e(2));
 		points.forEach((point)=>{
-			ctx.lineTo(point.x, point.y);
+			ctx.lineTo(point.e(1), point.e(2));
 		});
 		ctx.stroke();
 	}

@@ -1,64 +1,54 @@
-const RESOLUTION= 50;
+var Sylvester= require('../libs/sylvester');
+
+const DIST_RESOLUTION= 100;
+const DEG_RESOLUTION= 8;
 
 class Stroke {
 
 	constructor(){
-		this.reset();
+		this._points= [];
+		this._route= '';
+		this._lastPoint= null;
 	}
 
 	reset(point){
-		this._points= [];
-		this._routeX= '';
-		this._routeY= '';
-		this._lastPoint= null;
 
-		if(point){
-			this._points.push(point);
-			this._lastPoint= {
-				x: point.x,
-				y: point.y
-			}
-		}
+		var p= new Sylvester.Vector.create([point.x, point.y]);
+
+		this._points= [p];
+		this._route= '';
+		this._lastPoint= p;
 	}
 
 	append(point){
-		this._points.push(point);
 
-		var dx= point.x - this._lastPoint.x,
-			dy= point.y - this._lastPoint.y;
+		var p= new Sylvester.Vector.create([point.x, point.y]),
+			d= p.subtract(this._lastPoint);
 
-		var lastRouteX= this._routeX.charAt(this._routeX.length-1),
-			lastRouteY= this._routeY.charAt(this._routeY.length-1);
+		this._points.push(p);
 
-		if(Math.abs(dx)>RESOLUTION){
+		if(d.modulus()>DIST_RESOLUTION){
 
-			this._lastPoint.x= point.x;
+			var tan= Math.atan2(d.e(1), d.e(2));
+			tan+= Math.PI;
+			tan= tan/(Math.PI*2)*DEG_RESOLUTION;
+			tan= Math.round(tan)%DEG_RESOLUTION;
 
-			if(dx>0 && lastRouteX!=='R'){
-				this._routeX+= 'R';
+			if(this._route.charAt(this._route.length-1)!==String(tan)){
+				this._route+= String(tan);
+				// console.log(this._route);
 			}
 
-			if(dx<0 && lastRouteX!=='L'){
-				this._routeX+= 'L';
-			}
-		}
-
-		if(Math.abs(dy)>RESOLUTION){
-
-			this._lastPoint.y= point.y;
-
-			if(dy>0 && lastRouteY!=='D'){
-				this._routeY+= 'D';
-			}
-
-			if(dy<0 && lastRouteY!=='U'){
-				this._routeY+= 'U';
-			}
+			this._lastPoint= p;
 		}
 	}
 
 	get points(){
 		return this._points;
+	}
+
+	get route(){
+		return this._route;
 	}
 }
 
