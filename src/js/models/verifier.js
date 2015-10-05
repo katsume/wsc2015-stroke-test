@@ -52,7 +52,8 @@ class Verifier {
 			return;
 		}
 
-		console.log(route, this._lut[answer].id, this._lut[answer].value);
+		// console.log(route, this._lut[answer].id, this._lut[answer].value);
+		document.querySelector('.answer').innerHTML= this._lut[answer].value;
 	}
 
 	_levenstein(s1, s2){

@@ -36,7 +36,6 @@ class Stroke {
 
 			if(this._route.charAt(this._route.length-1)!==String(tan)){
 				this._route+= String(tan);
-				// console.log(this._route);
 			}
 
 			this._lastPoint= p;

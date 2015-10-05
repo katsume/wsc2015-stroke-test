@@ -14,6 +14,8 @@ document.addEventListener('DOMContentLoaded', ()=>{
 		touch= new Touch(stage);
 
 	touch.on('reset', (point)=>{
+		document.querySelector('.answer').innerHTML= '';
+
 		stroke.reset(point);
 		requestAnimationFrame(render);
 	});
